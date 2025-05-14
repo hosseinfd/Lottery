@@ -16,7 +16,7 @@ public class GetCurrencyByIdQueryHandler: IQueryHandler<CurrencyQueries.GetCurre
 
     public async Task<CurrencyDto?> Handle(CurrencyQueries.GetCurrencyByIdQuery request, CancellationToken cancellationToken)
     {
-        var currency = await _currencyReadRepository.GetByIdAsync(request.CurrencyId);
+        var currency = await _currencyReadRepository.GetByIdAsync(request.CurrencyId,cancellationToken);
         return currency is null ? null : currency.MapToDto();
     }
 }

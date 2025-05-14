@@ -12,12 +12,4 @@ public class CurrencyReadRepository : ReadRepository<Domain.Currency.Currency>,I
         _context = context;
     }
 
-    public async Task<IEnumerable<Domain.Currency.Currency>> GetAllAsync() => await _context.Currencies.ToListAsync();
-    public async Task<Domain.Currency.Currency?> GetByIdAsync(Guid currencyId)
-    {
-        return await _context.Currencies
-            .Where(q => q.CurrencyId == currencyId)
-            .Select(q => q)
-            .FirstOrDefaultAsync();
-    }
 }

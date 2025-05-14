@@ -25,8 +25,8 @@ public class CreateCurrencyCommandHandler : ICommandHandler<CurrencyCommands.Cre
             Symbol = request.Symbol
         };
 
-        await _currencyWriteRepository.AddAsync(currency);
-        await _unitOfWork.SaveChangesAsync();
+        await _currencyWriteRepository.AddAsync(currency,cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return currency.CurrencyId;
     }
