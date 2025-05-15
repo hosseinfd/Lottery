@@ -1,9 +1,10 @@
-﻿using Domain.RepoInterfaces.User;
+﻿using Domain.Entities.User;
+using Domain.RepoInterfaces.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.User;
 
-public class UserWriteRepository : WriteRepository<Domain.User.User>,IUserWriteRepository
+public class UserWriteRepository : WriteRepository<UserDao>,IUserWriteRepository
 {
     private readonly AppDbContext _context;
 

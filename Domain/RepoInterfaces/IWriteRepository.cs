@@ -1,10 +1,12 @@
-﻿namespace Domain.Interfaces;
+﻿using Domain.ServiceInterfaces;
+using Domain.Services;
 
-public interface IWriteRepository<T> where T : class
+namespace Domain.RepoInterfaces;
+
+public interface IWriteRepository<T> where T : Entity, IEntity
 {
-    Task AddAsync(T entity, CancellationToken ct = default);
+    void Add(T entity);
     void Update(T entity);
     void Delete(T entity);
-    Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default);
-    Task<IEnumerable<T>> GetAllAsync(CancellationToken ct = default);
+    Task DeleteByIdAsync(Guid id);
 }

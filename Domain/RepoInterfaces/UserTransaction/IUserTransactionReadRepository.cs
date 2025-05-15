@@ -1,8 +1,9 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities.UserTransaction;
+using Domain.Interfaces;
 
 namespace Domain.RepoInterfaces.UserTransaction;
 
-public interface IUserTransactionReadRepository : IReadRepository<Domain.UserTransaction.UserTransaction>
+public interface IUserTransactionReadRepository : IReadRepository<TransactionDao>
 {
-    public Task<IEnumerable<Domain.UserTransaction.UserTransaction>> GetByUserIdAsync(Guid userId);
+    public Task<IEnumerable<TransactionDao>> GetByUserIdAsync(Guid userId);
 }

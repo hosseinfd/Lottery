@@ -1,12 +1,12 @@
-﻿using Domain.Currency;
+﻿using Domain.Entities.Currency;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-public class CurrencyConfiguration : IEntityTypeConfiguration<Currency>
+public class  CurrencyConfiguration : IEntityTypeConfiguration<CurrencyDao>
 {
-    public void Configure(EntityTypeBuilder<Currency> builder)
+    public void Configure(EntityTypeBuilder<CurrencyDao> builder)
     {
         builder.HasKey(c => c.CurrencyId);
         builder.Property(c => c.Name).IsRequired().HasMaxLength(255);

@@ -1,50 +1,39 @@
 ﻿using Domain.Interfaces;
+using Domain.RepoInterfaces;
+using Domain.ServiceInterfaces;
+using Domain.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
 
-public class WriteRepository<T> : IWriteRepository<T> where T : class
+public class WriteRepository<T>(AppDbContext context) : IWriteRepository<T>
+    where T : Entity, IEntity
 {
-    private readonly AppDbContext _context;
+    protected readonly DbSet<T> DbSet = context.Set<T>();
 
-    public WriteRepository(AppDbContext context)
+    public async void Add(T entity)
     {
-        _context = context;
-    }
-
-    public async Task AddAsync(T entity, CancellationToken ct = default)
-    {
-        await _context.Set<T>().AddAsync(entity,ct);
+        context.Set<T>().Add(entity);
     }
 
 
     public void Delete(T entity)
     {
-        _context.Set<T>().Remove(entity);
+        DbSet.Remove(entity);
     }
 
-    public async Task<T?> GetByIdAsync(Guid id,CancellationToken ct = default)
-    {
-        return await _context.Set<T>().FindAsync(id,ct);
-    }
-
-    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken ct= default)
-    {
-        return await _context.Set<T>().ToListAsync(ct);
-    }
 
     public void Update(T entity)
     {
-        _context.Set<T>().Update(entity);
+        DbSet.Update(entity);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteByIdAsync(Guid id) 
     {
-        var entity = await GetByIdAsync(id);
+        var entity = await DbSet.FirstOrDefaultAsync(x => x.Id == id);
         if (entity != null)
         {
-            _context.Set<T>().Remove(entity);
+            DbSet.Remove(entity);
         }
     }
-
 }

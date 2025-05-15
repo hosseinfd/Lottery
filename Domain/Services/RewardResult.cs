@@ -8,8 +8,12 @@ public class RewardResult
     public Guid TransactionId { get; }
     public DateTime AwardedAt { get; }
 
-    public RewardResult(decimal amountAwarded, string currencySymbol, 
-        decimal newBalance, Guid transactionId)
+    public RewardResult(
+        decimal amountAwarded,
+        string currencySymbol,
+        decimal newBalance,
+        Guid transactionId
+    )
     {
         AmountAwarded = amountAwarded;
         CurrencySymbol = currencySymbol;

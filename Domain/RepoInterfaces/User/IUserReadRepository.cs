@@ -1,8 +1,9 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities.User;
+using Domain.Interfaces;
 
 namespace Domain.RepoInterfaces.User;
 
-public interface IUserReadRepository : IReadRepository<Domain.User.User>
+public interface IUserReadRepository : IReadRepository<UserDao>
 {
-    Task<Domain.User.User?> GetByTelegramIdAsync(string telegramId);
+    Task<UserDao?> GetByTelegramIdAsync(string telegramId);
 }

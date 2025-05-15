@@ -1,71 +1,113 @@
-﻿using AutoMapper;
+﻿using System.Collections.Concurrent;
 using Domain.Interfaces;
 using Domain.RepoInterfaces;
-using Microsoft.Extensions.Logging;
+using Domain.ServiceInterfaces;
+using Domain.Services;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Infrastructure;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(AppDbContext dbContext) : IUnitOfWork
 {
-    private readonly AppDbContext _context;
+    private IDbContextTransaction? _currentTransaction;
+    private IExecutionStrategy? _executionStrategy;
+    private readonly ConcurrentDictionary<Type, object> _repositories = new();
     private bool _disposed;
-    private readonly ILogger<UnitOfWork> _logger;
-    private readonly IMapper _mapper;
 
-    public UnitOfWork(AppDbContext context, ILogger<UnitOfWork> logger, IMapper mapper)
-    {
-        _context = context;
-        _logger = logger;
-        _mapper = mapper;
-    }
 
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public IWriteRepository<T> WriteRepository<T>() where T : Entity, IEntity
     {
-        // var modifiedCollections = _context.ChangeTracker.Entries().Where(q => q.State == EntityState.Modified);
-        // var modifiedMember = modifiedCollections.Select(q => q.Members.Select(w => w.IsModified)).ToString();
-        // _logger.LogInformation(modifiedMember);
-        return await _context.SaveChangesAsync(cancellationToken);
-    }
-
-    public async Task BeginTransactionAsync()
-    {
-        await _context.Database.BeginTransactionAsync();
-    }
-
-    public async Task CommitTransactionAsync()
-    {
-        await _context.Database.CommitTransactionAsync();
-    }
-
-    public async Task RollbackTransactionAsync()
-    {
-        await _context.Database.RollbackTransactionAsync();
-    }
-
-    public IWriteRepository<T> WriteRepository<T>() where T : class
-    {
-        return new WriteRepository<T>(_context);
-    }
-
-    public IReadRepository<T> ReadRepository<T>() where T : class
-    {
-        return new ReadRepository<T>(_context, _mapper);
-    }
-
-    // Dispose the context to release resources
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!_disposed && disposing)
+        if (_repositories.TryGetValue(typeof(T), out var repository))
         {
-            _context.Dispose();
+            return (WriteRepository<T>)repository;
         }
 
-        _disposed = true;
+        var newRepo = new WriteRepository<T>(dbContext);
+        _repositories.TryAdd(typeof(T), newRepo);
+        return newRepo;
     }
 
-    public void Dispose()
+    public IReadRepository<T> ReadRepository<T>() where T : Entity, IEntity
     {
-        Dispose(true);
+        if (_repositories.TryGetValue(typeof(T), out var repository))
+        {
+            return (ReadRepository<T>)repository;
+        }
+
+        var newRepo = new ReadRepository<T>(dbContext);
+        _repositories.TryAdd(typeof(T), newRepo);
+        return newRepo;
+    }
+    
+    public async Task<Guid> BeginTransaction(
+        CancellationToken cancellationToken = new CancellationToken())
+    {
+        _currentTransaction ??= await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        return _currentTransaction.TransactionId;
+    }
+
+    public async Task CommitTransactionAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        if (_currentTransaction != null)
+        {
+            try
+            {
+                await SaveChangesAsync(cancellationToken);
+                await _currentTransaction.CommitAsync(cancellationToken);
+            }
+            catch
+            {
+                await RollbackTransactionAsync(cancellationToken);
+                throw;
+            }
+            finally
+            {
+                await _currentTransaction.DisposeAsync();
+                _currentTransaction = null;
+            }
+        }
+    }
+
+    public async Task RollbackTransactionAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        if (_currentTransaction != null)
+        {
+            try
+            {
+                await _currentTransaction.RollbackAsync(cancellationToken);
+            }
+            finally
+            {
+                await _currentTransaction.DisposeAsync();
+                _currentTransaction = null;
+            }
+        }
+    }
+
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        return await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public IExecutionStrategy CreateExecutionStrategy()
+    {
+        return _executionStrategy ??= dbContext.Database.CreateExecutionStrategy();
+    }
+
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_disposed) return;
+
+        if (_currentTransaction != null)
+        {
+            await _currentTransaction.DisposeAsync();
+            _currentTransaction = null;
+            _executionStrategy = null;
+        }
+
+        await dbContext.DisposeAsync();
+        _disposed = true;
         GC.SuppressFinalize(this);
     }
 }
