@@ -1,13 +1,12 @@
-﻿using Domain.Event;
-using Domain.User;
+﻿using Domain.Entities.Event;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-public class EventParticipationConfiguration : IEntityTypeConfiguration<EventParticipation>
+public class EventParticipationConfiguration : IEntityTypeConfiguration<EventParticipationDao>
 {
-    public void Configure(EntityTypeBuilder<EventParticipation> builder)
+    public void Configure(EntityTypeBuilder<EventParticipationDao> builder)
     {
         builder
             .HasKey(ep => ep.ParticipationId);
@@ -22,17 +21,17 @@ public class EventParticipationConfiguration : IEntityTypeConfiguration<EventPar
             .Property(ep => ep.CompletedAt).IsRequired(false);
 
         builder
-            .HasOne(ep => ep.User)
+            .HasOne(ep => ep.UserDao)
             .WithMany()
             .HasForeignKey(ep => ep.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasOne(ep => ep.Scenario)
+            .HasOne(ep => ep.ScenarioDao)
             .WithMany()
             .HasForeignKey(ep => ep.ScenarioId);
 
-        builder.HasOne<Event>()
+        builder.HasOne<EventDao>()
             .WithMany()
             .HasForeignKey(p => p.EventId)
             .OnDelete(DeleteBehavior.Cascade);

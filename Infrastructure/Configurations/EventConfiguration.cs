@@ -1,13 +1,13 @@
-﻿using Domain.Event;
+﻿using Domain.Entities.Event;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Configurations;
 
-public class EventConfiguration : IEntityTypeConfiguration<Event>
+public class EventConfiguration : IEntityTypeConfiguration<EventDao>
 {
-    public void Configure(EntityTypeBuilder<Event> builder)
+    public void Configure(EntityTypeBuilder<EventDao> builder)
     {
-        builder.HasKey(e => e.EventId);
+        builder.HasKey(e => e.Id);
         builder.Property(e => e.Type).HasMaxLength(100);
         builder.Property(e => e.Title).HasMaxLength(255);
         builder.Property(e => e.Description).HasColumnType("TEXT");

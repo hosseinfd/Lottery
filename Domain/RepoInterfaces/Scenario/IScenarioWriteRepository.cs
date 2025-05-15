@@ -1,8 +1,9 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities.Event;
+using Domain.Interfaces;
 
 namespace Domain.RepoInterfaces.Scenario;
 
-public interface IScenarioWriteRepository : IWriteRepository<Domain.Event.Scenario>
+public interface IScenarioWriteRepository : IWriteRepository<ScenarioDao>
 {
     
 }

@@ -1,8 +1,9 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities.UserBalance;
+using Domain.Interfaces;
 
 namespace Domain.RepoInterfaces.UserBalance;
 
-public interface IUserBalanceReadRepository : IReadRepository<Domain.UserBalance.UserBalance>
+public interface IUserBalanceReadRepository : IReadRepository<UserBalanceDao>
 {
-    public Task<IEnumerable<Domain.UserBalance.UserBalance>> GetUserBalancesAsync(Guid userId);
+    public Task<IEnumerable<UserBalanceDao>> GetUserBalancesAsync(Guid userId);
 }

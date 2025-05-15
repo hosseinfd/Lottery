@@ -1,7 +1,8 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities.UserBalance;
+using Domain.Interfaces;
 
 namespace Domain.RepoInterfaces.UserBalance;
 
-public interface IUserBalanceWriteRepository : IWriteRepository<Domain.UserBalance.UserBalance>
+public interface IUserBalanceWriteRepository : IWriteRepository<UserBalanceDao>
 {
 }

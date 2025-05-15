@@ -1,9 +1,10 @@
-﻿using Domain.RepoInterfaces.UserTransaction;
+﻿using Domain.Entities.UserTransaction;
+using Domain.RepoInterfaces.UserTransaction;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.UserTransaction;
 
-public class UserTransactionWriteRepository : WriteRepository<Domain.UserTransaction.UserTransaction>,
+public class UserTransactionWriteRepository : WriteRepository<TransactionDao>,
     IUserTransactionWriteRepository
 {
     private readonly AppDbContext _context;

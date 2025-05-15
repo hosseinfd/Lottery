@@ -1,6 +1,9 @@
-﻿namespace Domain.Interfaces;
+﻿using Domain.ServiceInterfaces;
+using Domain.Services;
 
-public interface IReadRepository<T> where T : class
+namespace Domain.RepoInterfaces;
+
+public interface IReadRepository<T> where T : Entity,IEntity
 {
     Task<T?> GetByIdAsync(Guid id,CancellationToken cancellationToken = default);           
     Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);    

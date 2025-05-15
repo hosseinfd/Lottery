@@ -2,23 +2,10 @@
 
 namespace Domain;
 
-public class ValidationItem
+[method: SetsRequiredMembers]
+public class ValidationItem(string propertyName, string errorMessage, string errorCode)
 {
-    // public ValidationItem(string propertyName, string errorMessage, string errorCode)
-    // {
-    //     PropertyName = propertyName;
-    //     ErrorCode = errorCode;
-    //     ErrorMessage = errorMessage;
-    // }
-    [SetsRequiredMembers]
-    public ValidationItem(string propertyName, string errorMessage, string errorCode) =>
-        (PropertyName,  ErrorMessage,  ErrorCode) = (propertyName,  errorMessage,  errorCode);
-
-    // public required string PropertyName { get; set; }
-    // public required string ErrorCode { get; set; }
-    // public required string ErrorMessage { get; set; }
-    
-    public required string PropertyName { get; set; }
-    public required string ErrorCode { get; set; }
-    public required string ErrorMessage { get; set; }
+    public required string PropertyName { get; set; } = propertyName;
+    public required string ErrorCode { get; set; } = errorCode;
+    public required string ErrorMessage { get; set; } = errorMessage;
 }

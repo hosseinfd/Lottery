@@ -1,7 +1,8 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Entities.Currency;
+using Domain.Interfaces;
 
 namespace Domain.RepoInterfaces.Currency;
 
-public interface ICurrencyWriteRepository : IWriteRepository<Domain.Currency.Currency>
+public interface ICurrencyWriteRepository : IWriteRepository<CurrencyDao>
 {
 }

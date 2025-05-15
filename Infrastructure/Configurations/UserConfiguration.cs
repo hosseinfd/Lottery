@@ -1,15 +1,15 @@
-﻿using Domain.User;
+﻿using Domain.Entities.User;
 using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class UserConfiguration : IEntityTypeConfiguration<UserDao>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<UserDao> builder)
     {
-        builder.HasKey(u => u.UserId);
+        builder.HasKey(u => u.Id);
         builder.Property(u => u.TelegramId).IsRequired().HasMaxLength(255);
         builder.Property(u => u.Username).HasMaxLength(255);
         builder.Property(u => u.Name).HasMaxLength(255);

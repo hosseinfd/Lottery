@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
+using Domain.Entities.Event;
 using Domain.RepoInterfaces.Scenario;
 
 namespace Infrastructure.Repositories.Scenario;
 
-public class ScenarioReadRepository : ReadRepository<Domain.Event.Scenario>, IScenarioReadRepository
-{
-    public ScenarioReadRepository(AppDbContext context, IMapper mapper) : base(context, mapper)
-    {
-    }
-}
+public class ScenarioReadRepository(AppDbContext context) : ReadRepository<ScenarioDao>(context), IScenarioReadRepository;

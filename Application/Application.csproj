@@ -10,4 +10,10 @@
 <ItemGroup>
   <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
 </ItemGroup>
+
+
+<ItemGroup>
+  <Folder Include="Features\" />
+  <Folder Include="Utility\" />
+</ItemGroup>
 </Project>

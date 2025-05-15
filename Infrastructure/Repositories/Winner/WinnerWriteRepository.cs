@@ -1,8 +1,9 @@
-﻿using Domain.RepoInterfaces.Winner;
+﻿using Domain.Entities.Winner;
+using Domain.RepoInterfaces.Winner;
 
 namespace Infrastructure.Repositories.Winner;
 
-public class WinnerWriteRepository : WriteRepository<Domain.Winner.Winner>, IWinnerWriteRepository
+public class WinnerWriteRepository : WriteRepository<WinnerDao>, IWinnerWriteRepository
 {
     private readonly AppDbContext _context;
 

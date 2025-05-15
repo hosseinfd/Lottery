@@ -1,4 +1,4 @@
-namespace Co.Backend.Packages.Application.BuildingBlocks.CQRS.Model;
+namespace Application.BuildingBlocks.CQRS.Model;
 
 public class Page
 {

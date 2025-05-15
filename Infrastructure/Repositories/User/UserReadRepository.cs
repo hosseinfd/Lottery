@@ -1,27 +1,20 @@
 ﻿using AutoMapper;
+using Domain.Entities.User;
 using Domain.Interfaces;
 using Domain.RepoInterfaces.User;
-using Domain.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.User;
 
-public class UserReadRepository : ReadRepository<Domain.User.User>, IUserReadRepository
+public class UserReadRepository(AppDbContext context) : ReadRepository<UserDao>(context), IUserReadRepository
 {
-    private readonly AppDbContext _context;
+    public async Task<UserDao?> GetByTelegramIdAsync(string telegramId) =>
+        await context.Users.FirstOrDefaultAsync(u => u.TelegramId == telegramId);
 
-    public UserReadRepository(AppDbContext context, IMapper mapper) : base(context, mapper)
-    {
-        _context = context;
-    }
-
-    public async Task<Domain.User.User?> GetByTelegramIdAsync(string telegramId) =>
-        await _context.Users.FirstOrDefaultAsync(u => u.TelegramId == telegramId);
-
-    public async Task<UserDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
-    {
-        return await ProjectToDto<Domain.User.User, UserDto>(
-                _context.Users.Where(u => u.UserId == id))
-            .FirstOrDefaultAsync(ct);
-    }
+    // public async Task<UserDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
+    // {
+    //     return await ProjectToDto<UserDao, UserDto>(
+    //             _context.Users.Where(u => u.Id == id))
+    //         .FirstOrDefaultAsync(ct);
+    // }
 }

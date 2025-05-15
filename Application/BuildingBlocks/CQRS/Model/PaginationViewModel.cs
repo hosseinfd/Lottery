@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Application.BuildingBlocks.CQRS.Model;
 
 namespace Co.Backend.Packages.Application.BuildingBlocks.CQRS.Model;
 

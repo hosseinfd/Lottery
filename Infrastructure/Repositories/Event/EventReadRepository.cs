@@ -1,41 +1,31 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain.Event;
-using Domain.Event.Dto;
+using Domain.Entities.Event;
+using Domain.Entities.Event.Dto;
 using Domain.RepoInterfaces.Event;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Event;
 
-public class EventReadRepository :ReadRepository<Domain.Event.Event>, IEventReadRepository
+public class EventReadRepository(AppDbContext context, IMapper mapper) : ReadRepository<EventDao>(context), IEventReadRepository
 {
-    private readonly AppDbContext _context;
-    private readonly IMapper _mapper;
+    public async Task<ScenarioDao?> GetScenarioByIdAsync(Guid scenarioId) =>
+        await context.Scenarios.FindAsync(scenarioId);
 
-    public EventReadRepository(AppDbContext context, IMapper mapper) : base(context, mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
+    public async Task<EventDao?> GetEventByIdAsync(Guid eventId) =>
+        await context.Events.FindAsync(eventId);
 
-    public async Task<Domain.Event.Scenario?> GetScenarioByIdAsync(Guid scenarioId) =>
-        await _context.Scenarios.FindAsync(scenarioId);
-
-    public async Task<Domain.Event.Event?> GetEventByIdAsync(Guid eventId) =>
-        await _context.Events.FindAsync(eventId);
-    
     public async Task<IEnumerable<EventDto>> GetActiveEventsAsync(DateTime currentDate, CancellationToken ct = default)
     {
-        
-        return await _context.Events
+        var s = await context.Events
             .Where(e => e.StartDate <= currentDate && e.EndDate >= currentDate && e.IsActive)
-            .ProjectTo<EventDto>(_mapper.ConfigurationProvider)
             .ToListAsync(ct);
+        return s.Select(mapper.Map<EventDto>);
     }
 
     public async Task<bool> IsActiveAsync(Guid eventId, CancellationToken ct = default)
     {
-        return await _context.Events
-            .AnyAsync(e => e.EventId == eventId && e.IsActive, ct);
+        return await context.Events
+            .AnyAsync(e => e.Id == eventId && e.IsActive, ct);
     }
 }
