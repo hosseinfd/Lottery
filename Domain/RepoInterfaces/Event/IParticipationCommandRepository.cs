@@ -1,4 +1,4 @@
-﻿using Domain.Event;
+﻿using Domain.Entities.Event;
 using Domain.Interfaces;
 
 namespace Domain.RepoInterfaces.Event;

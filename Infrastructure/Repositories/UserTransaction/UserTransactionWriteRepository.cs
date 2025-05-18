@@ -1,9 +1,10 @@
 ﻿using Domain.RepoInterfaces.UserTransaction;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.UserTransaction;
 
-public class UserTransactionWriteRepository : WriteRepository<Domain.UserTransaction.UserTransaction>,
+public class UserTransactionWriteRepository : WriteRepository<Domain.Entities.UserTransaction.UserTransaction>,
     IUserTransactionWriteRepository
 {
     private readonly AppDbContext _context;

@@ -2,6 +2,6 @@
 
 namespace Domain.RepoInterfaces.Currency;
 
-public interface ICurrencyReadRepository : IReadRepository<Domain.Currency.Currency>
+public interface ICurrencyReadRepository : IReadRepository<Entities.Currency.Currency>
 {
 }

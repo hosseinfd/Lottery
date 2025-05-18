@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using Domain;
+using Domain.Common;
 using Domain.Exceptions;
 
 namespace Api.Middleware;

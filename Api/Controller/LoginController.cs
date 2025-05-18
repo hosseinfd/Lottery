@@ -1,4 +1,6 @@
-﻿using Domain;
+﻿using Api.Controller.BaseControllers;
+using Domain;
+using Domain.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controller;
