@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controller;
 
-[ApiController]
-[Route("api/v1/[controller]")]
+
 public class LoginController : BaseController
 {
  
