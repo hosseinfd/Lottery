@@ -1,8 +1,10 @@
-﻿using Domain.Entities.Event;
+﻿using Domain.Entities.Currency;
+using Domain.Entities.Event;
+using Domain.Entities.User;
 
 namespace Domain.Entities.UserTransaction;
 
-public class UserTransaction
+public class UserTransactionDao
 {
     public Guid TransactionId { get; set; }
     public Guid UserId { get; set; }
@@ -13,8 +15,9 @@ public class UserTransaction
     public Guid ReferenceId { get; set; }
     public string Details { get; set; }
     public DateTime CreatedAt { get; set; }
-    public Entities.User.User User { get; set; }
-    public Entities.Currency.Currency Currency { get; set; }
-    public Entities.Event.Event Event { get; set; }
+    public UserDao UserDao { get; set; }
+    public CurrencyDao CurrencyDao { get; set; }
+    public EventDao EventDao { get; set; }
     public Guid? ScenarioId { get; private set; }
-    public Scenario? Scenario { get; private set; }}
+    public ScenarioDao? Scenario { get; private set; }
+}

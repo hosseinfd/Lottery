@@ -1,17 +1,20 @@
-﻿namespace Domain.Entities.UserBalance;
+﻿using Domain.Entities.Currency;
+using Domain.Entities.User;
 
-public class UserBalance
+namespace Domain.Entities.UserBalance;
+
+public class UserBalanceDao
 {
-    public Guid BalanceId { get; set; }
-    public Guid UserId { get; set; }
-    public Guid CurrencyId { get; set; }
-    public decimal Balance { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public Entities.User.User User { get; set; }
-    public Entities.Currency.Currency Currency { get; set; }
-    
-    
+    public Guid BalanceId { get; }
+    public Guid UserId { get; }
+    public Guid CurrencyId { get; }
+    public decimal Balance { get; }
+    public DateTime UpdatedAt { get; }
+    public DateTime CreatedAt { get; }
+    public UserDao UserDao { get; }
+    public CurrencyDao CurrencyDao { get; }
+
+
     // Domain methods
     // public void Credit(decimal amount)
     // {

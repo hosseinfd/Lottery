@@ -2,7 +2,7 @@
 
 namespace Domain.RepoInterfaces.User;
 
-public interface IUserReadRepository : IReadRepository<Entities.User.User>
+public interface IUserReadRepository : IReadRepository<Entities.User.UserDao>
 {
-    Task<Entities.User.User?> GetByTelegramIdAsync(string telegramId);
+    Task<Entities.User.UserDao?> GetByTelegramIdAsync(string telegramId);
 }

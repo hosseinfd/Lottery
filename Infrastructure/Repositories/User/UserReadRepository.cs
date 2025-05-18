@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.User;
 
-public class UserReadRepository : ReadRepository<Domain.Entities.User.User>, IUserReadRepository
+public class UserReadRepository : ReadRepository<Domain.Entities.User.UserDao>, IUserReadRepository
 {
     private readonly AppDbContext _context;
 
@@ -15,12 +15,12 @@ public class UserReadRepository : ReadRepository<Domain.Entities.User.User>, IUs
         _context = context;
     }
 
-    public async Task<Domain.Entities.User.User?> GetByTelegramIdAsync(string telegramId) =>
+    public async Task<Domain.Entities.User.UserDao?> GetByTelegramIdAsync(string telegramId) =>
         await _context.Users.FirstOrDefaultAsync(u => u.TelegramId == telegramId);
 
     public async Task<UserDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        return await ProjectToDto<Domain.Entities.User.User, UserDto>(
+        return await ProjectToDto<Domain.Entities.User.UserDao, UserDto>(
                 _context.Users.Where(u => u.UserId == id))
             .FirstOrDefaultAsync(ct);
     }

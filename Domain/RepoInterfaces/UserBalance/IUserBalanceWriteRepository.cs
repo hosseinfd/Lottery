@@ -2,6 +2,6 @@
 
 namespace Domain.RepoInterfaces.UserBalance;
 
-public interface IUserBalanceWriteRepository : IWriteRepository<Entities.UserBalance.UserBalance>
+public interface IUserBalanceWriteRepository : IWriteRepository<Entities.UserBalance.UserBalanceDao>
 {
 }

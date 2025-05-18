@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Event;
 
-public class EventReadRepository :ReadRepository<Domain.Entities.Event.Event>, IEventReadRepository
+public class EventReadRepository :ReadRepository<Domain.Entities.Event.EventDao>, IEventReadRepository
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
@@ -18,10 +18,10 @@ public class EventReadRepository :ReadRepository<Domain.Entities.Event.Event>, I
         _mapper = mapper;
     }
 
-    public async Task<Domain.Entities.Event.Scenario?> GetScenarioByIdAsync(Guid scenarioId) =>
+    public async Task<Domain.Entities.Event.ScenarioDao?> GetScenarioByIdAsync(Guid scenarioId) =>
         await _context.Scenarios.FindAsync(scenarioId);
 
-    public async Task<Domain.Entities.Event.Event?> GetEventByIdAsync(Guid eventId) =>
+    public async Task<Domain.Entities.Event.EventDao?> GetEventByIdAsync(Guid eventId) =>
         await _context.Events.FindAsync(eventId);
     
     public async Task<IEnumerable<EventDto>> GetActiveEventsAsync(DateTime currentDate, CancellationToken ct = default)

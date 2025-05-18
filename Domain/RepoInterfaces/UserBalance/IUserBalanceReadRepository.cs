@@ -2,7 +2,7 @@
 
 namespace Domain.RepoInterfaces.UserBalance;
 
-public interface IUserBalanceReadRepository : IReadRepository<Entities.UserBalance.UserBalance>
+public interface IUserBalanceReadRepository : IReadRepository<Entities.UserBalance.UserBalanceDao>
 {
-    public Task<IEnumerable<Entities.UserBalance.UserBalance>> GetUserBalancesAsync(Guid userId);
+    public Task<IEnumerable<Entities.UserBalance.UserBalanceDao>> GetUserBalancesAsync(Guid userId);
 }

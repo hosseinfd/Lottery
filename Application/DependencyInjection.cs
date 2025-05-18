@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Application.Behaviours;
+using FluentValidation;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,14 +10,17 @@ namespace Application;
 
 public static class DependencyInjection
 {
-    public static void AddApplication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
+        var assembly = typeof(DependencyInjection).Assembly;
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddMediatR(configuration =>
+        services.AddValidatorsFromAssembly(assembly);
+        services.AddMediatR(config =>
             {
-                configuration.RegisterServicesFromAssemblies(Assembly.GetAssembly(typeof(IApplication))!);
-                configuration.AddRequestPreProcessor(typeof(RequestValidationBehavior<>));
+                config.RegisterServicesFromAssembly(assembly);
+                config.AddRequestPreProcessor(typeof(RequestValidationBehavior<>));
             }
         );
+        return services;
     }
 }

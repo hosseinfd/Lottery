@@ -3,11 +3,11 @@ using Domain.Entities.Currency;
 
 namespace Application.Mappings;
 
-public class CurrencyProfile : Profile
+public sealed class CurrencyProfile : Profile
 {
     public CurrencyProfile()
     {
-        CreateMap<Domain.Entities.Currency.Currency, CurrencyDto>()
+        CreateMap<CurrencyDao, CurrencyDto>()
             .ConvertUsing(currency =>
                 new CurrencyDto
                 {

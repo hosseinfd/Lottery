@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
-public class EventConfiguration : IEntityTypeConfiguration<Event>
+public class EventConfiguration : IEntityTypeConfiguration<EventDao>
 {
-    public void Configure(EntityTypeBuilder<Event> builder)
+    public void Configure(EntityTypeBuilder<EventDao> builder)
     {
         builder.HasKey(e => e.EventId);
         builder.Property(e => e.Type).HasMaxLength(100);

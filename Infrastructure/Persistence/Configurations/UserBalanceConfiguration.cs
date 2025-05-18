@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
-public class UserBalanceConfiguration : IEntityTypeConfiguration<UserBalance>
+public class UserBalanceConfiguration : IEntityTypeConfiguration<UserBalanceDao>
 {
-    public void Configure(EntityTypeBuilder<UserBalance> builder)
+    public void Configure(EntityTypeBuilder<UserBalanceDao> builder)
     {
         builder.HasKey(ub => ub.BalanceId);
         builder.Property(ub => ub.Balance).HasDefaultValue(0);
-        builder.HasOne(ub => ub.User).WithMany().HasForeignKey(ub => ub.UserId);
-        builder.HasOne(ub => ub.Currency).WithMany().HasForeignKey(ub => ub.CurrencyId);
+        builder.HasOne(ub => ub.UserDao).WithMany().HasForeignKey(ub => ub.UserId);
+        builder.HasOne(ub => ub.CurrencyDao).WithMany().HasForeignKey(ub => ub.CurrencyId);
         
         builder.ApplyCommonConfigurations();
     }

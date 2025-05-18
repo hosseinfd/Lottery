@@ -3,11 +3,11 @@ using Domain.Entities.User;
 
 namespace Application.Mappings;
 
-public class UserProfile : Profile
+public sealed class UserProfile : Profile
 {
     public UserProfile()
     {
-        CreateMap<Domain.Entities.User.User, UserDto>()
+        CreateMap<UserDao, UserDto>()
             .ConvertUsing(user =>
                 new UserDto
                 {

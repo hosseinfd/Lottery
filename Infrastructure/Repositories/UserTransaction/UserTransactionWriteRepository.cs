@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.UserTransaction;
 
-public class UserTransactionWriteRepository : WriteRepository<Domain.Entities.UserTransaction.UserTransaction>,
+public class UserTransactionWriteRepository : WriteRepository<Domain.Entities.UserTransaction.UserTransactionDao>,
     IUserTransactionWriteRepository
 {
     private readonly AppDbContext _context;

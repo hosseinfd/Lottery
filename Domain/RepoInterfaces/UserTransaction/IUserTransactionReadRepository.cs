@@ -2,7 +2,7 @@
 
 namespace Domain.RepoInterfaces.UserTransaction;
 
-public interface IUserTransactionReadRepository : IReadRepository<Entities.UserTransaction.UserTransaction>
+public interface IUserTransactionReadRepository : IReadRepository<Entities.UserTransaction.UserTransactionDao>
 {
-    public Task<IEnumerable<Entities.UserTransaction.UserTransaction>> GetByUserIdAsync(Guid userId);
+    public Task<IEnumerable<Entities.UserTransaction.UserTransactionDao>> GetByUserIdAsync(Guid userId);
 }

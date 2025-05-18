@@ -1,39 +1,21 @@
-using Microsoft.AspNetCore;
+using Api;
+using Application;
+using Infrastructure;
 
-namespace Api;
- 
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
+    serverOptions.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(5);
+    serverOptions.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(5);
+});
 
-    public static async Task Main(string[] args)
-    {
-        var host = CreateWebHostBuilder(args).Build();
-        await host.RunAsync();
-    }
+builder.Services
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure(builder.Configuration)
+    .AddApiServices(builder.Configuration);
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-    {
-        var environment = Environment.GetEnvironmentVariable(AspNetCoreEnvironment) ?? "Local";
-        var webHost=  WebHost.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                // var env = hostingContext.HostingEnvironment;
-
-                // config.AddJsonFile("appsettings.json", true, true)
-                //     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
-               
-                config.AddEnvironmentVariables();
-            })
-            .UseEnvironment(environment)
-            .UseStartup<Startup>()
-            .ConfigureKestrel(serverOptions =>
-            {
-                serverOptions.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(5);
-                serverOptions.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(5);
-            });
-
-        // webHost.UseSentry();
-        return webHost;
-    }
-}
+await builder
+    .Build()
+    .ConfigureApp()
+    .RunAsync();

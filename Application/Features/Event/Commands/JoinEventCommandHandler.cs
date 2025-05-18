@@ -42,7 +42,7 @@ public class JoinEventCommandHandler : ICommandHandler<EventCommands.JoinEventCo
             throw new EventException(new ValidationItem(null, "Already participating in this event", null));
 
         // 4. Create participation
-        var participation = new EventParticipation(request.UserId, request.EventId, _dateTime.Now);
+        var participation = new EventParticipationDao(request.UserId, request.EventId, _dateTime.Now);
 
         await _participationRepo.AddAsync(participation, ct);
         
