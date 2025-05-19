@@ -4,39 +4,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-public class WriteRepository<T> : IWriteRepository<T> where T : class
+public class WriteRepository<T>(AppDbContext context) : IWriteRepository<T>
+    where T : class
 {
-    private readonly AppDbContext _context;
-
-    public WriteRepository(AppDbContext context)
-    {
-        _context = context;
-    }
+    private readonly DbSet<T> _dbSet = context.Set<T>();
 
     public async Task AddAsync(T entity, CancellationToken ct = default)
     {
-        await _context.Set<T>().AddAsync(entity,ct);
+        await _dbSet.AddAsync(entity, ct);
     }
 
 
     public void Delete(T entity)
     {
-        _context.Set<T>().Remove(entity);
+        _dbSet.Remove(entity);
     }
 
-    public async Task<T?> GetByIdAsync(Guid id,CancellationToken ct = default)
+    public async Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        return await _context.Set<T>().FindAsync(id,ct);
+        return await _dbSet.FindAsync(id, ct);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken ct= default)
+    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken ct = default)
     {
-        return await _context.Set<T>().ToListAsync(ct);
+        return await _dbSet.ToListAsync(ct);
     }
 
     public void Update(T entity)
     {
-        _context.Set<T>().Update(entity);
+        _dbSet.Update(entity);
     }
 
     public async Task DeleteAsync(Guid id)
@@ -44,8 +40,7 @@ public class WriteRepository<T> : IWriteRepository<T> where T : class
         var entity = await GetByIdAsync(id);
         if (entity != null)
         {
-            _context.Set<T>().Remove(entity);
+            _dbSet.Remove(entity);
         }
     }
-
 }

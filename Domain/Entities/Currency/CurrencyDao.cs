@@ -1,8 +1,12 @@
-﻿namespace Domain.Entities.Currency;
+﻿using Domain.Common.EntityAttributeInterfaces;
 
-public class CurrencyDao
+namespace Domain.Entities.Currency;
+
+public class CurrencyDao : ISoftDeleted
 {
-    public Guid CurrencyId { get; }
-    public string Name { get; }
-    public string Symbol { get; }
+    public Guid CurrencyId { get; private set; }
+    public string Name { get; private set; }
+    public string Symbol { get; private set; }
+    public bool IsActive { get; set; }
+    public DateTime? DeactivatedAt { get; set; }
 }

@@ -3,10 +3,10 @@ using Domain.Interfaces;
 
 namespace Domain.RepoInterfaces.Event;
 
-public interface IParticipationCommandRepository : IWriteRepository<EventParticipationDao>
+public interface IParticipationCommandRepository : IWriteRepository<EventParticipantsDao>
 {
-    Task<EventParticipationDao?> GetAsync(Guid userId, Guid eventId, CancellationToken ct = default);
+    Task<EventParticipantsDao?> GetAsync(Guid userId, Guid eventId, CancellationToken ct = default);
     Task CompleteParticipationAsync(Guid participationId, CancellationToken ct = default);
     Task<bool> IsParticipatingAsync(Guid userId, Guid eventId, CancellationToken ct = default);
-    Task<IEnumerable<EventParticipationDao>> GetUserParticipationsAsync(Guid userId, CancellationToken ct = default);
+    Task<IEnumerable<EventParticipantsDao>> GetUserParticipationsAsync(Guid userId, CancellationToken ct = default);
 }

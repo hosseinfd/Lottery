@@ -6,27 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-public class ReadRepository<T> : IReadRepository<T> where T : class
+public class ReadRepository<T>(AppDbContext context, IMapper mapper) : IReadRepository<T>
+    where T : class
 {
-    private readonly AppDbContext _context;
-    protected readonly IMapper Mapper;
+    protected readonly IMapper Mapper = mapper;
+    private readonly DbSet<T> _dbSet = context.Set<T>();
 
-    public ReadRepository(AppDbContext context, IMapper mapper)
+    public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        _context = context;
-        Mapper = mapper;
+        return await _dbSet.FindAsync(new object?[] { id, cancellationToken }, cancellationToken: cancellationToken);
     }
 
-    public async Task<T?> GetByIdAsync(Guid id,CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken ct = default)
     {
-        return await _context.Set<T>().FindAsync(new object?[] { id, cancellationToken }, cancellationToken: cancellationToken);
+        return await _dbSet.ToListAsync(default);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken ct= default)
-    {
-        return await _context.Set<T>().ToListAsync(default);
-    }
-    
     protected IQueryable<TDto> ProjectToDto<TEntity, TDto>(IQueryable<TEntity> query)
         where TEntity : class
     {

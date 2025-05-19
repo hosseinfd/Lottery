@@ -1,20 +1,24 @@
-﻿using Domain.Entities.Currency;
+﻿using Domain.Common.EntityAttributeInterfaces;
+using Domain.Entities.Currency;
 using Domain.Entities.User;
 
 namespace Domain.Entities.UserBalance;
 
-public class UserBalanceDao
+public class UserBalanceDao : ICreated, ISoftDeleted
 {
-    public Guid BalanceId { get; }
-    public Guid UserId { get; }
-    public Guid CurrencyId { get; }
-    public decimal Balance { get; }
-    public DateTime UpdatedAt { get; }
-    public DateTime CreatedAt { get; }
-    public UserDao UserDao { get; }
-    public CurrencyDao CurrencyDao { get; }
+    public Guid BalanceId { get; private set; }
+    public Guid UserId { get; private set; }
+    public Guid CurrencyId { get; private set; }
+    public decimal Balance { get; private set; }
+    public UserDao UserDao { get; private set; }
+    public CurrencyDao CurrencyDao { get; private set; }
 
+    public DateTime CreatedAt { get; set; }
 
+    public DateTime? UpdatedAt { get; set; }
+    public bool IsActive { get; set; }
+
+    public DateTime? DeactivatedAt { get; set; }
     // Domain methods
     // public void Credit(decimal amount)
     // {

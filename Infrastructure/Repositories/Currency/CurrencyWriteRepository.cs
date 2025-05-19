@@ -1,9 +1,10 @@
-﻿using Domain.RepoInterfaces.Currency;
+﻿using Domain.Entities.Currency;
+using Domain.RepoInterfaces.Currency;
 using Infrastructure.Persistence;
 
 namespace Infrastructure.Repositories.Currency;
 
-public class CurrencyWriteRepository : WriteRepository<Domain.Entities.Currency.CurrencyDao>, ICurrencyWriteRepository
+public class CurrencyWriteRepository : WriteRepository<CurrencyDao>, ICurrencyWriteRepository
 {
     private readonly AppDbContext _context;
 
