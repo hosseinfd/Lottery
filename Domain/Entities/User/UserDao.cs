@@ -1,10 +1,14 @@
-﻿namespace Domain.Entities.User;
+﻿using Domain.Common.EntityAttributeInterfaces;
 
-public class UserDao
+namespace Domain.Entities.User;
+
+public class UserDao : ISoftDeleted
 {
-    public Guid UserId { get; }
-    public string TelegramId { get; }
-    public string Username { get; }
-    public string Name { get; }
-    public DateTime CreatedAt { get; }
+    public Guid UserId { get; private set; }
+    public string TelegramId { get; private set; }
+    public string Username { get; private set; }
+    public string Name { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public bool IsActive { get; set; }
+    public DateTime? DeactivatedAt { get; set; }
 }

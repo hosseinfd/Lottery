@@ -5,7 +5,7 @@ namespace Domain.RepoInterfaces.Event;
 
 public interface IEventWriteRepository : IWriteRepository<Entities.Event.EventDao>
 {
-    public Task AddParticipationAsync(EventParticipationDao participationDao, CancellationToken ct = default);
+    public Task AddParticipationAsync(EventParticipantsDao participantsDao, CancellationToken ct = default);
 
     public Task AddScenarioAsync(Entities.Event.ScenarioDao scenarioDao,CancellationToken ct = default);
     

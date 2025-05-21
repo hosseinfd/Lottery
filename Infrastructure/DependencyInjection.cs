@@ -14,8 +14,10 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(options =>
-            options.UseMySQL(configuration.GetConnectionString("Default") ??
-                             throw new NullReferenceException("Connection string is null")));
+            options
+                // .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                .UseMySQL(configuration.GetConnectionString("Default") ??
+                          throw new NullReferenceException("Connection string is null")));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         // Register repositories (generic repositories)

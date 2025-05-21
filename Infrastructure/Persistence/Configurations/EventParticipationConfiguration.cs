@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
-public class EventParticipationConfiguration : IEntityTypeConfiguration<EventParticipationDao>
+public class EventParticipationConfiguration : IEntityTypeConfiguration<EventParticipantsDao>
 {
-    public void Configure(EntityTypeBuilder<EventParticipationDao> builder)
+    public void Configure(EntityTypeBuilder<EventParticipantsDao> builder)
     {
         builder
-            .HasKey(ep => ep.ParticipationId);
+            .HasKey(ep => ep.ParticipantId);
 
         builder
             .Property(ep => ep.Status).HasMaxLength(50).HasDefaultValue("pending");

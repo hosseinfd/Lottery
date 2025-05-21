@@ -16,8 +16,8 @@ public class EventWriteRepository : WriteRepository<Domain.Entities.Event.EventD
         return await _context.Events.Where(q => q.EventId == id).Select(q => q).FirstOrDefaultAsync();
     }
 
-    public async Task AddParticipationAsync(EventParticipationDao participationDao, CancellationToken ct = default) =>
-        await _context.EventParticipations.AddAsync(participationDao, ct);
+    public async Task AddParticipationAsync(EventParticipantsDao participantsDao, CancellationToken ct = default) =>
+        await _context.EventParticipants.AddAsync(participantsDao, ct);
 
     public async Task<bool> EventNameExistsAsync(string name, CancellationToken ct = default)
     {

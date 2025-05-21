@@ -1,12 +1,16 @@
-﻿namespace Domain.Entities.Event;
+﻿using Domain.Common.EntityAttributeInterfaces;
 
-public class ScenarioDao
+namespace Domain.Entities.Event;
+
+public class ScenarioDao : ISoftDeleted
 {
-    public Guid ScenarioId { get; }
-    public Guid EventId { get; }
-    public string Condition { get; }
-    public string RewardType { get; }
-    public decimal RewardValue { get; }
-    public string AdditionalData { get; }
-    public EventDao EventDao { get; }
+    public Guid ScenarioId { get; private set; }
+    public Guid EventId { get; private set; }
+    public string Condition { get; private set; }
+    public string RewardType { get; private set; }
+    public decimal RewardValue { get; private set; }
+    public string AdditionalData { get; private set; }
+    public EventDao EventDao { get; private set; }
+    public bool IsActive { get; set; }
+    public DateTime? DeactivatedAt { get; set; }
 }

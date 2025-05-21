@@ -17,6 +17,6 @@ public class EventProfile : Profile
             .ForMember(dest => dest.RewardCurrencySymbol, opt => opt.MapFrom(src => src.RewardCurrency.Symbol))
             .ForMember(dest => dest.AdditionalData, opt => opt.MapFrom(src => src.AdditionalData));
 
-        CreateMap<EventParticipationDao, EventParticipationDto>();
+        CreateMap<EventParticipantsDao, EventParticipationDto>();
     }
 }

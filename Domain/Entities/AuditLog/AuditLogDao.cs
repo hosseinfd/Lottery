@@ -1,11 +1,15 @@
-﻿namespace Domain.Entities.AuditLog;
+﻿using Domain.Common.EntityAttributeInterfaces;
 
-public class AuditLogDao
+namespace Domain.Entities.AuditLog;
+
+public class AuditLogDao : ISoftDeleted
 {
-    public Guid LogId { get; } // UUID as primary key
-    public string ActionType { get; }
-    public Guid? UserId { get; } // Nullable foreign key to User
-    public Guid? EventId { get; } // Nullable foreign key to Event
-    public string Details { get; }
-    public DateTime Timestamp { get; }
+    public Guid LogId { get; private set; } // UUID as primary key
+    public string ActionType { get; private set; }
+    public Guid? UserId { get; private set; } // Nullable foreign key to User
+    public Guid? EventId { get; private set; } // Nullable foreign key to Event
+    public string Details { get; private set; }
+    public DateTime Timestamp { get; private set; }
+    public bool IsActive { get; set; }
+    public DateTime? DeactivatedAt { get; set; }
 }
