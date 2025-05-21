@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Common;
 using FluentValidation;
 using MediatR.Pipeline;
 using ValidationException = Domain.Exceptions.ValidationException;

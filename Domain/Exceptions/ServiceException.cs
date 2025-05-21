@@ -1,4 +1,5 @@
 using System.Net;
+using Domain.Common;
 
 namespace Domain.Exceptions
 {

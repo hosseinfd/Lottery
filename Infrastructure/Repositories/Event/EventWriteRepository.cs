@@ -1,16 +1,17 @@
-﻿using Domain.Event;
+﻿using Domain.Entities.Event;
 using Domain.RepoInterfaces.Event;
+using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Event;
 
-public class EventWriteRepository : WriteRepository<Domain.Event.Event>, IEventWriteRepository
+public class EventWriteRepository : WriteRepository<Domain.Entities.Event.Event>, IEventWriteRepository
 {
     private readonly AppDbContext _context;
 
     public EventWriteRepository(AppDbContext context) : base(context) => _context = context;
 
-    public async Task<Domain.Event.Event?> GetByIdAsync(Guid id)
+    public async Task<Domain.Entities.Event.Event?> GetByIdAsync(Guid id)
     {
         return await _context.Events.Where(q => q.EventId == id).Select(q => q).FirstOrDefaultAsync();
     }
@@ -28,6 +29,6 @@ public class EventWriteRepository : WriteRepository<Domain.Event.Event>, IEventW
         return await _context.Events.AnyAsync(q => q.EventId == id, ct);
     }
 
-    public async Task AddScenarioAsync(Domain.Event.Scenario scenario, CancellationToken ct = default) =>
+    public async Task AddScenarioAsync(Domain.Entities.Event.Scenario scenario, CancellationToken ct = default) =>
         await _context.Scenarios.AddAsync(scenario, ct);
 }

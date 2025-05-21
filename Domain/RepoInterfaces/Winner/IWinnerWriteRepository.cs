@@ -2,6 +2,6 @@
 
 namespace Domain.RepoInterfaces.Winner;
 
-public interface IWinnerWriteRepository : IWriteRepository<Domain.Winner.Winner>
+public interface IWinnerWriteRepository : IWriteRepository<Entities.Winner.Winner>
 {
 }
