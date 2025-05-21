@@ -3,14 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controller;
 
-public class BaseController : ControllerBase 
+[ApiController]
+[Route("api/v1/[controller]")]
+public class BaseController : ControllerBase
 {
-    public BaseController()
-    {
-        
-    }
-    private IMediator _mediator = null!;
+    private IMediator? _mediator;
 
     protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
-
 }
