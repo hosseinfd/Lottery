@@ -15,14 +15,14 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<User> Users { get; set; }
-    public DbSet<Currency> Currencies { get; set; }
-    public DbSet<UserBalance> UserBalances { get; set; }
-    public DbSet<UserTransaction> UserTransactions { get; set; }
-    public DbSet<Event> Events { get; set; }
-    public DbSet<Scenario> Scenarios { get; set; }
-    public DbSet<EventParticipation> EventParticipations { get; set; }
-    public DbSet<Winner> Winners { get; set; }
+    public DbSet<UserDao> Users { get; set; }
+    public DbSet<CurrencyDao> Currencies { get; set; }
+    public DbSet<UserBalanceDao> UserBalances { get; set; }
+    public DbSet<UserTransactionDao> UserTransactions { get; set; }
+    public DbSet<EventDao> Events { get; set; }
+    public DbSet<ScenarioDao> Scenarios { get; set; }
+    public DbSet<EventParticipationDao> EventParticipations { get; set; }
+    public DbSet<WinnerDao> Winners { get; set; }
     // public DbSet<AuditLog> AuditLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

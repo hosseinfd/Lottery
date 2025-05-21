@@ -3,7 +3,7 @@ using Infrastructure.Persistence;
 
 namespace Infrastructure.Repositories.Currency;
 
-public class CurrencyWriteRepository : WriteRepository<Domain.Entities.Currency.Currency>, ICurrencyWriteRepository
+public class CurrencyWriteRepository : WriteRepository<Domain.Entities.Currency.CurrencyDao>, ICurrencyWriteRepository
 {
     private readonly AppDbContext _context;
 

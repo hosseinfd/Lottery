@@ -17,7 +17,7 @@ public class CreateCurrencyCommandHandler : ICommandHandler<CurrencyCommands.Cre
 
     public async Task<Guid> Handle(CurrencyCommands.CreateCurrencyCommand request, CancellationToken cancellationToken)
     {
-        var currency = new Domain.Entities.Currency.Currency
+        var currency = new Domain.Entities.Currency.CurrencyDao
         {
             CurrencyId = Guid.NewGuid(),
             Name = request.Name,

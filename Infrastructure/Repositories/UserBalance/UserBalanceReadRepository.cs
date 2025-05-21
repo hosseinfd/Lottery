@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.UserBalance;
 
-public class UserBalanceReadRepository : ReadRepository<Domain.Entities.UserBalance.UserBalance>, IUserBalanceReadRepository
+public class UserBalanceReadRepository : ReadRepository<Domain.Entities.UserBalance.UserBalanceDao>, IUserBalanceReadRepository
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
@@ -16,6 +16,6 @@ public class UserBalanceReadRepository : ReadRepository<Domain.Entities.UserBala
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<Domain.Entities.UserBalance.UserBalance>> GetUserBalancesAsync(Guid userId) =>
-        await _context.UserBalances.Where(b => b.UserId == userId).Include(b => b.Currency).ToListAsync();
+    public async Task<IEnumerable<Domain.Entities.UserBalance.UserBalanceDao>> GetUserBalancesAsync(Guid userId) =>
+        await _context.UserBalances.Where(b => b.UserId == userId).Include(b => b.CurrencyDao).ToListAsync();
 }

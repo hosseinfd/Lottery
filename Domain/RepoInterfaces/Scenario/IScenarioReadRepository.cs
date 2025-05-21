@@ -2,7 +2,7 @@
 
 namespace Domain.RepoInterfaces.Scenario;
 
-public interface IScenarioReadRepository : IReadRepository<Entities.Event.Scenario>
+public interface IScenarioReadRepository : IReadRepository<Entities.Event.ScenarioDao>
 {
     
 }

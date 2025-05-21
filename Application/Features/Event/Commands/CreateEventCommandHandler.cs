@@ -17,7 +17,7 @@ public class CreateEventCommandHandler: ICommandHandler<EventCommands.CreateEven
 
     public async Task<Guid> Handle(EventCommands.CreateEventCommand request, CancellationToken cancellationToken)
     {
-        var @event = new Domain.Entities.Event.Event
+        var @event = new Domain.Entities.Event.EventDao
         {
             EventId = Guid.NewGuid(),
             Type = request.Type,

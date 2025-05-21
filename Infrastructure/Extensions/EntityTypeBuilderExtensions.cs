@@ -8,7 +8,7 @@ public static class EntityTypeBuilderExtensions
 {
     public static void ApplyCommonConfigurations<T>(this EntityTypeBuilder<T> builder) where T : class
     {
-        builder.Property(nameof(User.CreatedAt))
+        builder.Property(nameof(UserDao.CreatedAt))
             // .HasDefaultValueSql("getdate()");
             .HasDefaultValue(DateTime.UtcNow);
 

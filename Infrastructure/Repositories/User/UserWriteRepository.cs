@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.User;
 
-public class UserWriteRepository : WriteRepository<Domain.Entities.User.User>,IUserWriteRepository
+public class UserWriteRepository : WriteRepository<Domain.Entities.User.UserDao>,IUserWriteRepository
 {
     private readonly AppDbContext _context;
 

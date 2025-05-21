@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.UserTransaction;
 
-public class UserTransactionReadRepository: ReadRepository<Domain.Entities.UserTransaction.UserTransaction>,IUserTransactionReadRepository
+public class UserTransactionReadRepository: ReadRepository<Domain.Entities.UserTransaction.UserTransactionDao>,IUserTransactionReadRepository
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
@@ -16,6 +16,6 @@ public class UserTransactionReadRepository: ReadRepository<Domain.Entities.UserT
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<Domain.Entities.UserTransaction.UserTransaction>> GetByUserIdAsync(Guid userId) =>
+    public async Task<IEnumerable<Domain.Entities.UserTransaction.UserTransactionDao>> GetByUserIdAsync(Guid userId) =>
         await _context.UserTransactions.Where(t => t.UserId == userId).ToListAsync();
 }

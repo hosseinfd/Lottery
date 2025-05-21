@@ -3,7 +3,7 @@ using Infrastructure.Persistence;
 
 namespace Infrastructure.Repositories.Winner;
 
-public class WinnerWriteRepository : WriteRepository<Domain.Entities.Winner.Winner>, IWinnerWriteRepository
+public class WinnerWriteRepository : WriteRepository<Domain.Entities.Winner.WinnerDao>, IWinnerWriteRepository
 {
     private readonly AppDbContext _context;
 

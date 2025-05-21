@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
-public class UserTransactionConfiguration : IEntityTypeConfiguration<UserTransaction>
+public class UserTransactionConfiguration : IEntityTypeConfiguration<UserTransactionDao>
 {
-    public void Configure(EntityTypeBuilder<UserTransaction> builder)
+    public void Configure(EntityTypeBuilder<UserTransactionDao> builder)
     {
         builder
             .HasKey(ut => ut.TransactionId);
@@ -22,16 +22,16 @@ public class UserTransactionConfiguration : IEntityTypeConfiguration<UserTransac
             .HasMaxLength(50);
         
         builder
-            .HasOne(ut => ut.User)
+            .HasOne(ut => ut.UserDao)
             .WithMany()
             .HasForeignKey(ut => ut.UserId);
         
         builder
-            .HasOne(ut => ut.Currency)
+            .HasOne(ut => ut.CurrencyDao)
             .WithMany()
             .HasForeignKey(ut => ut.CurrencyId);
 
-        builder.HasOne(ut => ut.Event)
+        builder.HasOne(ut => ut.EventDao)
             .WithMany(e => e.UserTransactions)
             .HasForeignKey(ut => ut.EventId);
             

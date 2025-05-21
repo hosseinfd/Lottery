@@ -26,7 +26,7 @@ public class CreateUserCommandHandler : ICommandHandler<UserCommands.CreateUserC
                     null)
             );
 
-        var user = new Domain.Entities.User.User
+        var user = new Domain.Entities.User.UserDao
         {
             UserId = Guid.NewGuid(),
             TelegramId = request.TelegramId,
